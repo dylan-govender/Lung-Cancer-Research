@@ -1,8 +1,8 @@
 # 🎬 Movies dataset template
 
-A simple Streamlit app showing movie data from [The Movie Database (TMDB)](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata). 
+A simple Streamlit app showing lung cancer data and prediction from [Exploring Lung Cancer DataSet](https://www.kaggle.com/datasets/nancyalaswad90/lung-cancer/data). 
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://movies-dataset-template.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lung-cancer-research.streamlit.app/)
 
 ### How to run it on your own machine
 
