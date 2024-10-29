@@ -42,19 +42,18 @@ def load_data():
 
 lung_df = load_data()
 
+
+print(lung_df.columns)
+
 # Mapping dictionary for binary columns (1: No, 2: Yes)
-binary_mapping = {1: "No", 2: "Yes", "YES": "Yes", "NO": "No"}
+binary_mapping = {1: "No", 2: "Yes", "YES": "Yes", "NO": "No", "M": "Male", "F": "Female"}
 
 columns = ["Gender", "Age"]
 
 # Apply mapping to each binary column
 for col in lung_df.columns:
-    if col not in columns:
+    if col != "Age":
         lung_df[col] = lung_df[col].map(binary_mapping)
-
-# Mapping dictionary for gender
-gender_mapping = {"M": "Male", "F": "Female"}
-lung_df["Gender"] = lung_df["Gender"].map(gender_mapping)
 
 # Gender selection with mapped values
 genders = st.multiselect(
@@ -63,22 +62,22 @@ genders = st.multiselect(
     default=["Male", "Female"]
 )
 
+main_features = ["Smoking", "Peer Pressure", "Chronic Disease", "Alcohol Consuming"]
+main_symptoms = ["Yellow Fingers", "Anxiety", "Fatigue", "Allergy", "Wheezing", "Coughing", "Shortness Of Breath", "Swallowing Difficulty", "Chest Pain"]
+
 # Features multiselect with relevant features
 features = st.multiselect(
     "**Select Features**",
-    options=["Smoking", "Peer Pressure", "Chronic Disease", "Alcohol Consuming"],
-    default=["Smoking", "Peer Pressure", "Chronic Disease", "Alcohol Consuming"]
+    options=main_features,
+    default=main_features
 )
 
 # Symptoms multiselect based on symptom columns
 symptoms = st.multiselect(
     "**Select Symptoms**",
-    options=["Yellow Fingers", "Anxiety", "Fatigue", "Allergy", "Wheezing", "Coughing",
-             "Shortness Of Breath", "Swallowing Difficulty", "Chest Pain"],
-    default=["Yellow Fingers", "Anxiety", "Fatigue", "Allergy", "Wheezing", "Coughing",
-             "Shortness Of Breath", "Swallowing Difficulty", "Chest Pain"]
+    options=main_symptoms,
+    default=main_symptoms
 )
-
 
 # Age slider based on the dataset's age range (1-120)
 ages = st.slider(
@@ -150,12 +149,20 @@ st.altair_chart(gender_chart, use_container_width=True)
 
 # --------------------------------------------------------------
 
-lr_model = joblib.load('models/knn_model.pkl')
-knn_model = joblib.load('models/knn_model.pkl')
-
 # Streamlit UI
 st.subheader("📋 Lung Cancer Prediction Survey")
 st.write("**Enter the patient's information below to predict the likelihood of lung cancer:**")
+
+@st.cache_data
+def load_models():
+    # Load the models
+    lr_model = joblib.load('models/lr_model.pkl')  # Corrected model name
+    knn_model = joblib.load('models/knn_model.pkl')
+    label_encoder = joblib.load('models/label_encoder.pkl')
+    scaler = joblib.load('models/scaler.pkl')
+    return lr_model, knn_model, label_encoder, scaler
+
+lr_model, knn_model, label_encoder, scaler = load_models()
 
 # Age input
 age = st.slider("**Select Age**", min_value=1, max_value=120, value=30)
@@ -165,17 +172,38 @@ gender = st.selectbox("**Select Gender**", options=["Male", "Female"])
 
 # User input for binary features
 feature_inputs = {}
-for feature in features:
-    feature_inputs[feature] = st.selectbox(f"**{feature}?**", options=["No", "Yes"])
-
-# User input for symptoms
-symptom_inputs = {}
-for symptom in symptoms:
-    symptom_inputs[symptom] = st.selectbox(f"**{symptom}?**", options=["No", "Yes"])
+for feature in lung_df.columns:
+    if feature not in columns and feature != "Lung Cancer":
+        feature_inputs[feature] = st.selectbox(f"**{feature}?**", options=["No", "Yes"])
 
 # Model selection
-model_choice = st.selectbox("**Choose Model for Prediction**", options=["Logistic Regression", "K-Nearest Neighbors"])
+model_choice = st.selectbox("**Choose a Model for Prediction**", options=["Logistic Regression", "K-Nearest Neighbors"])
 selected_model = lr_model if model_choice == "Logistic Regression" else knn_model
+
+if st.button("Predict"):
+    # Prepare input data for prediction
+    input_data = {
+        "Gender": 1 if gender == "Male" else 0,
+        "Age": age,
+        **feature_inputs,
+        "Lung Cancer": "No"
+    }
+
+    # Convert input data to DataFrame
+    input_df = pd.DataFrame([input_data])
+    for col in input_df.columns:
+        if col not in columns:
+            input_df[col] = label_encoder.transform(input_df[col])
+
+    # Transform features
+    del input_df["Lung Cancer"]  
+    input_df = scaler.transform(input_df)
+
+    # Prediction
+    prediction = selected_model.predict(input_df)
+    result = "Likely to have lung cancer." if prediction[0] == 1 else "Unlikely to have lung cancer."
+    # Display prediction result
+    st.write("\n\n**Prediction Result:**", result)
 
 
 # --------------------------------------------------------------
