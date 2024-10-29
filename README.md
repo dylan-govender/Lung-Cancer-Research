@@ -1,4 +1,4 @@
-# 🎬 Movies dataset template
+# 🫁 Lung Cancer Detection and Research
 
 A simple Streamlit app showing lung cancer data and prediction from [Exploring Lung Cancer DataSet](https://www.kaggle.com/datasets/nancyalaswad90/lung-cancer/data). 
 
