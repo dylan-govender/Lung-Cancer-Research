@@ -26,10 +26,9 @@ st.write(
 st.subheader("🔍 Exploring Lung Cancer")
 st.write(
     """
-    This section visualizes data from [Exploring Lung Cancer Dataset](https://www.kaggle.com/datasets/nancyalaswad90/lung-cancer/data).
-    The effectiveness of cancer prediction system helps the people to know their cancer risk with low cost and it also helps people to take the appropriate decision based on their cancer risk status. 
-    The data is collected from the website online lung cancer prediction system. Just 
-    click on the widgets below to explore!
+    This section visualises data from the [Exploring Lung Cancer Dataset](https://www.kaggle.com/datasets/nancyalaswad90/lung-cancer/data).
+    The effectiveness of cancer a prediction system can inform people of their cancer risk with low cost and it will help people to make a more informed decision based on their cancer risk status. 
+    Just click on the widgets below to explore!
     """
 )
 
@@ -210,7 +209,7 @@ if st.button("Predict"):
 
 
 "---"
-st.subheader("🌍 Lung Cancer Research UKZN")
+st.subheader("🌍 Lung Cancer Research")
 st.write(
     """
     **Research done by
@@ -219,5 +218,19 @@ st.write(
     """ 
 )
 
+"---"
+st.subheader("🔗 References")
+
+st.write(
+    "**[Lung Cancer DataSet](https://www.kaggle.com/datasets/yusufdede/lung-cancer-dataset), Yusuf Dede (2018)**"
+)
+
+st.write(
+    "**[Lung and Colon Cancer Histopathological Image Dataset (LC25000)](https://www.kaggle.com/datasets/andrewmvd/lung-and-colon-cancer-histopathological-images/data), Borkowski AA (2019)**"
+)
+
+st.write(
+    "**[The IQ-OTH/NCCD lung cancer dataset](https://www.kaggle.com/datasets/hamdallak/the-iqothnccd-lung-cancer-dataset/data), Alyasriy (2023)**"
+)
 # [The Movie Database (TMDB)](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata)]
 
