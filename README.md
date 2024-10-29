@@ -1,6 +1,6 @@
 # 🫁 Lung Cancer Detection and Research
 
-A simple Streamlit app showing lung cancer data and prediction from [Exploring Lung Cancer DataSet](https://www.kaggle.com/datasets/nancyalaswad90/lung-cancer/data). 
+A simple Streamlit app showing lung cancer data and prediction from [Exploring Lung Cancer Dataset](https://www.kaggle.com/datasets/nancyalaswad90/lung-cancer/data). 
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lung-cancer-research.streamlit.app/)
 

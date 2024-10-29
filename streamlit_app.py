@@ -2,6 +2,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import joblib
 
 # Show the page title and description.
 st.set_page_config(page_title="Lung Cancer Detection", page_icon="🫁")
@@ -44,14 +45,12 @@ lung_df = load_data()
 # Mapping dictionary for binary columns (1: No, 2: Yes)
 binary_mapping = {1: "No", 2: "Yes", "YES": "Yes", "NO": "No"}
 
-# List of binary columns that need mapping
-binary_columns = ["Smoking", "Yellow Fingers", "Anxiety", "Peer Pressure", "Chronic Disease",
-                  "Fatigue", "Allergy", "Wheezing", "Alcohol Consuming", "Coughing",
-                  "Shortness Of Breath", "Swallowing Difficulty", "Chest Pain", "Lung Cancer"]
+columns = ["Gender", "Age"]
 
 # Apply mapping to each binary column
-for col in binary_columns:
-    lung_df[col] = lung_df[col].map(binary_mapping)
+for col in lung_df.columns:
+    if col not in columns:
+        lung_df[col] = lung_df[col].map(binary_mapping)
 
 # Mapping dictionary for gender
 gender_mapping = {"M": "Male", "F": "Female"}
@@ -98,7 +97,7 @@ lung_df_filtered = lung_df[
 lung_df_filtered = lung_df_filtered.sort_values(by="Age", ascending=True)
 
 # Select only the necessary columns based on user input
-columns_to_display = ["Age", "Gender"] + features + symptoms + ["Lung Cancer"]
+columns_to_display = ["Age", "Gender", "Lung Cancer"] + features + symptoms
 lung_df_filtered = lung_df_filtered[columns_to_display]
 
 st.dataframe(
@@ -149,32 +148,39 @@ gender_chart = (
 
 st.altair_chart(gender_chart, use_container_width=True)
 
-"---"
+# --------------------------------------------------------------
 
-# Optional: Add more charts for other features
-# Example: Bar chart for Smoking status
-smoking_counts = lung_df_filtered['Smoking'].value_counts().reset_index()
-smoking_counts.columns = ['Smoking Status', 'Count']
+lr_model = joblib.load('models/knn_model.pkl')
+knn_model = joblib.load('models/knn_model.pkl')
 
-smoking_chart = (
-    alt.Chart(smoking_counts)
-    .mark_bar()
-    .encode(
-        x=alt.X('Smoking Status:N', title='Smoking Status'),
-        y=alt.Y('Count:Q', title='Count'),
-        color='Smoking Status:N',
-        tooltip=['Smoking Status', 'Count']
-    )
-    .properties(title="Smoking Status Distribution")
-)
+# Streamlit UI
+st.subheader("📋 Lung Cancer Prediction Survey")
+st.write("**Enter the patient's information below to predict the likelihood of lung cancer:**")
 
-st.altair_chart(smoking_chart, use_container_width=True)
+# Age input
+age = st.slider("**Select Age**", min_value=1, max_value=120, value=30)
+
+# Gender selection
+gender = st.selectbox("**Select Gender**", options=["Male", "Female"])
+
+# User input for binary features
+feature_inputs = {}
+for feature in features:
+    feature_inputs[feature] = st.selectbox(f"**{feature}?**", options=["No", "Yes"])
+
+# User input for symptoms
+symptom_inputs = {}
+for symptom in symptoms:
+    symptom_inputs[symptom] = st.selectbox(f"**{symptom}?**", options=["No", "Yes"])
+
+# Model selection
+model_choice = st.selectbox("**Choose Model for Prediction**", options=["Logistic Regression", "K-Nearest Neighbors"])
+selected_model = lr_model if model_choice == "Logistic Regression" else knn_model
+
 
 # --------------------------------------------------------------
 
 
-
-# --------------------------------------------------------------
 "---"
 st.subheader("🌍 Lung Cancer Research UKZN")
 st.write(
