@@ -243,14 +243,45 @@ st.logo(
     size="large"
 )
 
-# adjust image size
+# make logo vanish when scrolling down
 st.markdown(
     """
+    <style>
+    img[data-testid="stLogo"] {
+        border: 3px solid #000000; /* Black border, adjust color and thickness as needed */
+        border-radius: 8px;       /* Rounded corners, adjust radius as needed */
+        padding: 4px;             /* Space between image and border */
+    }
+    </style>
+    
     <style>
     img[data-testid="stLogo"] {
         height: 4rem;  
     }
     </style>
+
+    <style>
+    /* Initial styling for the logo */
+    img[data-testid="stLogo"] {
+        transition: opacity 0.5s ease;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 100;
+    }
+    </style>
+
+    <script>
+    // JavaScript to hide the logo on scroll
+    window.addEventListener("scroll", function() {
+        var logo = document.querySelector('img[data-testid="stLogo"]');
+        if (window.scrollY > 5) {
+            logo.style.opacity = "0";
+        } else {
+            logo.style.opacity = "1";
+        }
+    });
+    </script>
     """,
     unsafe_allow_html=True
 )
