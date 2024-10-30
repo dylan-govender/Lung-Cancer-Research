@@ -204,11 +204,48 @@ if st.button("Predict"):
     # Display prediction result
     st.write("\n\n**Prediction Result:**", result)
 
+# --------------------------------------------------------------
+
+
+# logo and images
+
+UKZN_LOGO = "images/UKZN.png"
+st.logo(
+    UKZN_LOGO,
+    icon_image=UKZN_LOGO,
+    size="large"
+)
+
+# make logo vanish when scrolling down
+st.markdown(
+    """
+    <style>
+    img[data-testid="stLogo"] {
+        border: 3px solid #000000; /* Black border, adjust color and thickness as needed */
+        border-radius: 8px;       /* Rounded corners, adjust radius as needed */
+        padding: 4px;             /* Space between image and border */
+    }
+    </style>
+
+    <style>
+    img[data-testid="stLogo"] {
+        height: 4rem;  
+    }
+    </style>
+
+    <a href="lung-cancer-research">
+        <img src="{UKZN_LOGO}" alt="UKZN Logo" data-testid="stLogo">
+    </a>
+    
+    """,
+    unsafe_allow_html=True
+)
 
 # --------------------------------------------------------------
 
 
 "---"
+st.markdown('<a id="lung-cancer-research"></a>', unsafe_allow_html=True)
 st.subheader("🌍 Lung Cancer Research")
 st.write(
     """
@@ -231,57 +268,4 @@ st.write(
 
 st.write(
     "- **[The IQ-OTH/NCCD lung cancer dataset](https://www.kaggle.com/datasets/hamdallak/the-iqothnccd-lung-cancer-dataset/data), Alyasriy (2023)**"
-)
-
-
-# logo and images
-
-UKZN_LOGO = "images/UKZN.png"
-st.logo(
-    UKZN_LOGO,
-    icon_image=UKZN_LOGO,
-    size="large"
-)
-
-# make logo vanish when scrolling down
-st.markdown(
-    """
-    <style>
-    img[data-testid="stLogo"] {
-        border: 3px solid #000000; /* Black border, adjust color and thickness as needed */
-        border-radius: 8px;       /* Rounded corners, adjust radius as needed */
-        padding: 4px;             /* Space between image and border */
-    }
-    </style>
-    
-    <style>
-    img[data-testid="stLogo"] {
-        height: 4rem;  
-    }
-    </style>
-
-    <style>
-    /* Initial styling for the logo */
-    img[data-testid="stLogo"] {
-        transition: opacity 0.5s ease;
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        z-index: 100;
-    }
-    </style>
-
-    <script>
-    // JavaScript to hide the logo on scroll
-    window.addEventListener("scroll", function() {
-        var logo = document.querySelector('img[data-testid="stLogo"]');
-        if (window.scrollY > 5) {
-            logo.style.opacity = "0";
-        } else {
-            logo.style.opacity = "1";
-        }
-    });
-    </script>
-    """,
-    unsafe_allow_html=True
 )
