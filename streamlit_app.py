@@ -221,22 +221,9 @@ st.markdown(
     """
     <style>
     img[data-testid="stLogo"] {
-        border: 3px solid #000000; /* Black border, adjust color and thickness as needed */
-        border-radius: 8px;       /* Rounded corners, adjust radius as needed */
-        padding: 4px;             /* Space between image and border */
-    }
-    </style>
-
-    <style>
-    img[data-testid="stLogo"] {
         height: 4rem;  
     }
     </style>
-
-    <a href="lung-cancer-research">
-        <img src="{UKZN_LOGO}" alt="UKZN Logo" data-testid="stLogo">
-    </a>
-    
     """,
     unsafe_allow_html=True
 )
@@ -245,7 +232,6 @@ st.markdown(
 
 
 "---"
-st.markdown('<a id="lung-cancer-research"></a>', unsafe_allow_html=True)
 st.subheader("🌍 Lung Cancer Research")
 st.write(
     """
