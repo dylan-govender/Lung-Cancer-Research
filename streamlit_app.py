@@ -23,6 +23,14 @@ st.write(
 
 # --------------------------------------------------------------
 
+st.subheader("CT Scans of Lung Cancer")
+st.image("images/Lung Cancer Images/CT/CT.png", caption="Sample CT Scan Images Used for Model Training in Lung Cancer Detection")
+
+st.subheader("Histopathological Images of Lung Cancer")
+st.image("images/Lung Cancer Images/Histopathological/Histopathological.png", caption="Sample  Images Used for Model Training in Lung Cancer Detection")
+
+# --------------------------------------------------------------
+
 st.subheader("🔍 Exploring Lung Cancer")
 st.write(
     """
