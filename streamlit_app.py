@@ -232,5 +232,25 @@ st.write(
 st.write(
     "- **[The IQ-OTH/NCCD lung cancer dataset](https://www.kaggle.com/datasets/hamdallak/the-iqothnccd-lung-cancer-dataset/data), Alyasriy (2023)**"
 )
-# [The Movie Database (TMDB)](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata)]
 
+
+# logo and images
+
+UKZN_LOGO = "images/UKZN.png"
+st.logo(
+    UKZN_LOGO,
+    icon_image=UKZN_LOGO,
+    size="large"
+)
+
+# adjust image size
+st.markdown(
+    """
+    <style>
+    img[data-testid="stLogo"] {
+        height: 4rem;  
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
