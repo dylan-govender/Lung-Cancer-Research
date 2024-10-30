@@ -35,7 +35,7 @@ st.subheader("🔍 Exploring Lung Cancer")
 st.write(
     """
     This section visualises data from the [Exploring Lung Cancer Dataset](https://www.kaggle.com/datasets/nancyalaswad90/lung-cancer/data).
-    The effectiveness of cancer a prediction system can inform people of their cancer risk with low cost and it will help people to make a more informed decision based on their cancer risk status. 
+    The effectiveness of cancer prediction system can inform individuals of their cancer risk with low cost and it will help people to make a more informed decision based on their cancer risk status. 
     Just click on the widgets below to explore!
     """
 )
